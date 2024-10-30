@@ -19,5 +19,6 @@ jobs:
     - name: Set up SQLLint
       run: npm install -g sql-lint
 
+
     - name: Run SQLLint
       run: sql-lint DataSchemaModified.sql
