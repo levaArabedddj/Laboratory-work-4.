@@ -21,4 +21,4 @@ jobs:
               sql-lint RelationDB_DetailedDataSchema.sql || echo "SQL schema does not meet code conventions"
             else
               echo "RelationDB_DetailedDataSchema.sql not found"
-          fi
+          fi 
