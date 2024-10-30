@@ -18,11 +18,7 @@ jobs:
       - name: Lint SQL schema file
         run: |
           if [ -f "RelationDB_DetailedDataSchema.sql" ]; then
-            if [ -f "RelationDB_DetailedDataSchema.sql" ]; then
               sql-lint RelationDB_DetailedDataSchema.sql || echo "SQL schema does not meet code conventions"
             else
               echo "RelationDB_DetailedDataSchema.sql not found"
-            fi
-          else
-            echo "RelationDB_DetailedDataSchema.sql not found"
           fi
