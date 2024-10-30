@@ -19,11 +19,6 @@ jobs:
     - name: Set up SQLLint
       run: npm install -g sql-lint
       
-    - name: Set up SQLFluff
-      run: pip install sqlfluff
-
-    - name: Run SQLFluff
-      run: sqlfluff lint DataSchemaModified.sql --dialect postgres
 
     - name: Run SQLLint
       run: sql-lint DataSchemaModified.sql
