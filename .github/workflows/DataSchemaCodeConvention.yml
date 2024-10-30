@@ -12,12 +12,17 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v2
 
+      - name: Install sql-lint
+        run: npm install -g sql-lint
+
       - name: Lint SQL schema file
         run: |
           if [ -f "RelationDB_DetailedDataSchema.sql" ]; then
-            sql-lint DataSchema.sql || echo "SQL schema does not meet code conventions"
+            if [ -f "DataSchema.sql" ]; then
+              sql-lint DataSchema.sql || echo "SQL schema does not meet code conventions"
+            else
+              echo "DataSchema.sql not found"
+            fi
           else
-            echo "DataSchema.sql not found"
+            echo "RelationDB_DetailedDataSchema.sql not found"
           fi
-
-     
