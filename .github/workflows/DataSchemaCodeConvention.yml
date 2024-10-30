@@ -1,0 +1,19 @@
+name: Check Data Schema Code Convention
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check_code_convention:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Lint SQL schema file
+        if: exists('RelationDB_DetailedDataSchema.sql')
+        run: sql-lint DataSchema.sql || echo "SQL schema does not meet code conventions"
+
+    
