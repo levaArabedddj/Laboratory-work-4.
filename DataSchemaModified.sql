@@ -36,7 +36,7 @@ CREATE TABLE API (
         VERSION ~ '^[0-9]+\\.[0-9]+$' -- Format like "1.0"
     ),
     URL VARCHAR(255) CHECK (
-        URL ~ '^(https?|ftp)://[\\w\\-]+(\\.[\\w\\-]+)+[/#?]?.*$' -- Valid URL format
+        URL ~ '^https?://[a-zA-Z0-9\\-\\.]+(\\.[a-zA-Z]{2,})?(/.*)?$' -- Simplified URL format
     ),
     AUTHORIZATION VARCHAR(100) CHECK (AUTHORIZATION IN ('Token-based', 'OAuth'))
 );
