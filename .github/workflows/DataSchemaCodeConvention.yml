@@ -25,6 +25,5 @@ jobs:
     - name: Run SQLFluff
       run: sqlfluff lint DataSchemaModified.sql --dialect postgres
 
-
     - name: Run SQLLint
       run: sql-lint DataSchemaModified.sql
