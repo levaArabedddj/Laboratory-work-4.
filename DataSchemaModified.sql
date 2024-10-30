@@ -6,7 +6,7 @@ CREATE TABLE Conference (
     participantCount INT CHECK (participantCount > 0),
     eventDate DATE CHECK (eventDate > CURRENT_DATE), -- Date must be in the future
     location VARCHAR(100) CHECK (location ~ '^[A-Za-z0-9\\s,]+$'), -- Only letters, numbers, spaces, and commas
-    organizer VARCHAR(0),
+    organizer VARCHAR(50),
     topic VARCHAR(100),
     duration FLOAT CHECK (duration > 0),
     status VARCHAR(50) CHECK (status IN ('Active', 'Planned', 'Cancelled'))
@@ -15,7 +15,7 @@ CREATE TABLE Conference (
 -- Table Speaker
 CREATE TABLE Speaker (
     id INT PRIMARY KEY,
-    conference_id INT  Conference(id),
+    conference_id INT REFERENCES Conference(id),
     speaker VARCHAR(100)
 );
 
@@ -63,3 +63,4 @@ CREATE TABLE Configuration (
     dateFormat VARCHAR(20) CHECK (dateFormat IN ('DD/MM/YYYY', 'MM/DD/YYYY')),
     temperatureFormat VARCHAR(5) CHECK (temperatureFormat IN ('°C', '°F'))
 );
+
