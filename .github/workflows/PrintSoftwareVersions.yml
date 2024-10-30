@@ -1,0 +1,25 @@
+name: Print Software Versions
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  print_data_processing_versions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Print Apache Struts version
+        run: struts -v || echo "Struts is not installed"
+
+  print_database_versions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Print PostgreSQL version
+        run: psql --version || echo "PostgreSQL is not installed"
