@@ -1,34 +1,23 @@
-name: Check Data Schema Code Convention
+name: SQL Schema Code Convention Check
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  check_code_convention:
+  sql-lint:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check out the code
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Install sql-lint
-        run: npm install -g sql-lint
+    - name: Set up SQLLint
+      run: npm install -g sql-lint
 
-      - name: Lint Modified SQL schema file
-        run: |
-          if [ -f "RelationDB_DetailedDataSchema.sql" ]; then
-            if [ -f "DataSchemaModified.sql" ]; then
-              echo "Running sql-lint on DataSchemaModified.sql"
-              if ! sql-lint DataSchemaModified.sql; then
-                echo "Ошибка: SQL схема не соответствует требованиям кодирования."
-                exit 1  # Завершаем работу с ошибкой
-              fi
-            else
-              echo "Ошибка: DataSchemaModified.sql не найден."
-              exit 1  # Завершаем работу с ошибкой
-            fi
-          else
-            echo "Ошибка: RelationDB_DetailedDataSchema.sql не найден."
-            exit 1  # Завершаем работу с ошибкой
-          fi
+    - name: Run SQLLint
+      run: sql-lint DataSchema.sql
