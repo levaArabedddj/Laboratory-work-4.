@@ -13,7 +13,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Lint SQL schema file
-        if: exists('RelationDB_DetailedDataSchema.sql')
-        run: sql-lint DataSchema.sql || echo "SQL schema does not meet code conventions"
+        run: |
+          if [ -f "DataSchema.sql" ]; then
+            sql-lint DataSchema.sql || echo "SQL schema does not meet code conventions"
+          else
+            echo "DataSchema.sql not found"
+          fi
 
-    
+     
