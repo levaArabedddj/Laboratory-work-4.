@@ -15,10 +15,20 @@ jobs:
       - name: Install sql-lint
         run: npm install -g sql-lint
 
-      - name: Lint SQL schema file
+      - name: Lint Modified SQL schema file
         run: |
           if [ -f "RelationDB_DetailedDataSchema.sql" ]; then
-              sql-lint RelationDB_DetailedDataSchema.sql || echo "SQL schema does not meet code conventions"
+            if [ -f "DataSchemaModified.sql" ]; then
+              echo "Running sql-lint on DataSchemaModified.sql"
+              if ! sql-lint DataSchemaModified.sql; then
+                echo "Ошибка: SQL схема не соответствует требованиям кодирования."
+                exit 1  # Завершаем работу с ошибкой
+              fi
             else
-              echo "RelationDB_DetailedDataSchema.sql not found"
-          fi 
+              echo "Ошибка: DataSchemaModified.sql не найден."
+              exit 1  # Завершаем работу с ошибкой
+            fi
+          else
+            echo "Ошибка: RelationDB_DetailedDataSchema.sql не найден."
+            exit 1  # Завершаем работу с ошибкой
+          fi
