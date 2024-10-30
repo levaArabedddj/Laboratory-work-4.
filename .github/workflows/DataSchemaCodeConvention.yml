@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - main
- 
+  
 jobs:
   sql-lint:
     runs-on: ubuntu-latest
