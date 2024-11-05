@@ -1,4 +1,3 @@
--- Table Conference
 CREATE TABLE CONFERENCE (
     ID INT PRIMARY KEY,
     PARTICIPANT_COUNT INT CHECK (PARTICIPANT_COUNT > 0),
@@ -10,55 +9,48 @@ CREATE TABLE CONFERENCE (
     STATUS VARCHAR(50) CHECK (STATUS IN ('Active', 'Planned', 'Cancelled'))
 );
 
-
-
--- Table Speaker
-CREATE TABLE Speaker (
-    id INT PRIMARY KEY,
-    conference_id INT REFERENCES Conference(id),
-    speaker VARCHAR(100)
+CREATE TABLE SPEAKER (
+    ID INT PRIMARY KEY,
+    CONFERENCE_ID INT REFERENCES CONFERENCE (ID),
+    SPEAKER VARCHAR(100)
 );
 
--- Table Participant
-CREATE TABLE Participant (
-    id INT PRIMARY KEY,
-    conference_id INT REFERENCES Conference(id),
-    participant VARCHAR(100)
+CREATE TABLE PARTICIPANT (
+    ID INT PRIMARY KEY,
+    CONFERENCE_ID INT REFERENCES CONFERENCE (ID),
+    PARTICIPANT VARCHAR(100)
 );
 
 CREATE TABLE API (
     ID INT PRIMARY KEY,
     TYPE VARCHAR(50) CHECK (TYPE IN ('REST', 'SOAP')),
-    VERSION VARCHAR(10) CHECK (VERSION ~ '^[0-9]+\\.[0-9]+$'), 
+    VERSION VARCHAR(10) CHECK (VERSION ~ '^[0-9]+\\.[0-9]+$'),
     URL VARCHAR(255) CHECK (URL ~ '^(https?|ftp)://[\\w\\-]+(\\.[\\w\\-]+)+[/#?]?.*$'),
     AUTHORIZATION VARCHAR(100) CHECK (AUTHORIZATION IN ('Token-based', 'OAuth'))
 );
 
--- Table SupportedMethodsAPI
-CREATE TABLE SupportedMethodsAPI (
-    id INT PRIMARY KEY,
-    api_id INT REFERENCES API(id),
-    method VARCHAR(20) CHECK (method IN ('GET', 'POST', 'PUT', 'DELETE'))
+CREATE TABLE SUPPORTED_METHODS_API (
+    ID INT PRIMARY KEY,
+    API_ID INT REFERENCES API (ID),
+    METHOD VARCHAR(20) CHECK (METHOD IN ('GET', 'POST', 'PUT', 'DELETE'))
 );
 
--- Table TemperatureAPI
-CREATE TABLE TemperatureAPI (
-    id INT PRIMARY KEY,
-    api_id INT REFERENCES API(id),
-    currentTemperature FLOAT,
-    targetTemperature FLOAT,
-    minTemperature FLOAT,
-    maxTemperature FLOAT,
-    lastUpdated DATETIME CHECK (lastUpdated > CURRENT_TIMESTAMP - INTERVAL '1 DAY'), -- Must be recent
-    sensorStatus VARCHAR(50) CHECK (sensorStatus IN ('Active', 'Inactive', 'Faulty'))
+CREATE TABLE TEMPERATURE_API (
+    ID INT PRIMARY KEY,
+    API_ID INT REFERENCES API (ID),
+    CURRENT_TEMPERATURE FLOAT,
+    TARGET_TEMPERATURE FLOAT,
+    MIN_TEMPERATURE FLOAT,
+    MAX_TEMPERATURE FLOAT,
+    LAST_UPDATED TIMESTAMP CHECK (LAST_UPDATED > CURRENT_TIMESTAMP - INTERVAL '1 DAY'),
+    SENSOR_STATUS VARCHAR(50) CHECK (SENSOR_STATUS IN ('Active', 'Inactive', 'Faulty'))
 );
 
--- Table Configuration
-CREATE TABLE Configuration (
-    id INT PRIMARY KEY,
-    parameters VARCHAR(200),
-    autoUpdateInterval INT CHECK (autoUpdateInterval > 0),
-    locale VARCHAR(20) CHECK (locale IN ('en-US', 'uk-UA')),
-    dateFormat VARCHAR(20) CHECK (dateFormat IN ('DD/MM/YYYY', 'MM/DD/YYYY')),
-    temperatureFormat VARCHAR(5) CHECK (temperatureFormat IN ('°C', '°F'))
+CREATE TABLE CONFIGURATION (
+    ID INT PRIMARY KEY,
+    PARAMETERS VARCHAR(200),
+    AUTO_UPDATE_INTERVAL INT CHECK (AUTO_UPDATE_INTERVAL > 0),
+    LOCALE VARCHAR(20) CHECK (LOCALE IN ('en-US', 'uk-UA')),
+    DATE_FORMAT VARCHAR(20) CHECK (DATE_FORMAT IN ('DD/MM/YYYY', 'MM/DD/YYYY')),
+    TEMPERATURE_FORMAT VARCHAR(5) CHECK (TEMPERATURE_FORMAT IN ('°C', '°F'))
 );
