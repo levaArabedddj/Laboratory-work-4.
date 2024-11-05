@@ -1,5 +1,3 @@
--- RelationDB_DetailedDataSchema.sql
-
 -- Table Conference
 CREATE TABLE Conference (
     id INT PRIMARY KEY,
