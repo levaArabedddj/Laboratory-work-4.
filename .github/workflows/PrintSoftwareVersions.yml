@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  print_data_processing_versions:
+  print_versions:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the code
@@ -15,11 +15,8 @@ jobs:
       - name: Print Apache Struts version
         run: struts -v || echo "Struts is not installed"
 
-  print_database_versions:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the code
-        uses: actions/checkout@v2
+      - name: Install PostgreSQL
+        run: sudo apt-get update && sudo apt-get install -y postgresql
 
       - name: Print PostgreSQL version
         run: psql --version || echo "PostgreSQL is not installed"
