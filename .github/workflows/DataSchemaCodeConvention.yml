@@ -3,7 +3,7 @@ name: Data Schema Code Convention Check
 on:  
   push:
     branches:  
-      - main  # Укажите вашу основную ветку
+      - main  # Укажите вашу основную ветку 
  
 jobs:
   DataSchemaLinter:    
