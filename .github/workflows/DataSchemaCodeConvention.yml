@@ -20,7 +20,7 @@ jobs:
  
       - name: Lint SQL file for code conventions 
         run: | 
-          sql-lint ./DataSchema.sql 
+          sql-lint ./DataSchemaModified.sql 
  
       - name: Display schema for review 
         run: | 
