@@ -4,7 +4,7 @@ on:
   push:
     branches: 
       - main  # Укажите вашу основную ветку
-
+ 
 jobs:
   DataSchemaLinter:
     runs-on: ubuntu-latest
