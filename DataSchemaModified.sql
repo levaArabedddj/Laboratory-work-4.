@@ -1,14 +1,15 @@
 -- Table Conference
-CREATE TABLE Conference (
-    id INT PRIMARY KEY,
-    participantCount INT CHECK (participantCount > 0),
-    eventDate DATE CHECK (eventDate > CURRENT_DATE), 
-    location VARCHAR(100) , 
-    organizer VARCHAR(50),
-    topic VARCHAR(100),
-    duration FLOAT CHECK (duration > 0),
-    status VARCHAR(50) CHECK (status IN ('Active', 'Planned', 'Cancelled'))
+CREATE TABLE CONFERENCE (
+    ID INT PRIMARY KEY,
+    PARTICIPANT_COUNT INT CHECK (PARTICIPANT_COUNT > 0),
+    EVENT_DATE DATE CHECK (EVENT_DATE > CURRENT_DATE),
+    LOCATION VARCHAR(100),
+    ORGANIZER VARCHAR(50),
+    TOPIC VARCHAR(100),
+    DURATION FLOAT CHECK (DURATION > 0),
+    STATUS VARCHAR(50) CHECK (STATUS IN ('Active', 'Planned', 'Cancelled'))
 );
+
 
 -- Table Speaker
 CREATE TABLE Speaker (
