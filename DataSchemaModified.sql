@@ -30,15 +30,14 @@ CREATE TABLE PARTICIPANT (
 
 -- Table API
 CREATE TABLE API (
-    ID INT PRIMARY KEY,
-    TYPE VARCHAR(50) CHECK (TYPE IN ('REST', 'SOAP')),
-    VERSION VARCHAR(10) CHECK (
-        VERSION ~ '^[0-9]+\\.[0-9]+$' -- Format like "1.0"
-    ),
-    URL VARCHAR(255) CHECK (
-        URL ~ '^https?://[a-zA-Z0-9\\-\\.]+(\\.[a-zA-Z]{2,})?(/.*)?$' -- Simplified URL format
-    ),
-    AUTHORIZATION VARCHAR(100) CHECK (AUTHORIZATION IN ('Token-based', 'OAuth'))
+   CREATE TABLE API (
+    id INT PRIMARY KEY,
+    type VARCHAR(50) CHECK (type IN ('REST', 'SOAP')),
+    version VARCHAR(10) CHECK (version SIMILAR TO '[0-9]+\\.[0-9]+'), -- Using SIMILAR TO
+    url VARCHAR(255) CHECK (
+        url SIMILAR TO '(https?|ftp)://[\\w\\-]+(\\.[\\w\\-]+)+[/#?]?.*'
+    ), -- Replacing ~ with SIMILAR TO for SQLFluff compatibility
+    authorization VARCHAR(100) CHECK (authorization IN ('Token-based', 'OAuth'))
 );
 
 -- Table SupportedMethodsAPI
