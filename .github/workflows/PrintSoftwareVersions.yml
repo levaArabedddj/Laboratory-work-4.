@@ -6,6 +6,15 @@ on:
       - main
 
 jobs:
+  print_data_processing_versions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Print Apache Struts version
+        run: struts -v || echo "Apache Struts is not installed"
+        
   print_versions:
     runs-on: ubuntu-latest
     steps:
@@ -20,3 +29,5 @@ jobs:
 
       - name: Print PostgreSQL version
         run: psql --version || echo "PostgreSQL is not installed"
+
+  
