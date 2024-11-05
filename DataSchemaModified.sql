@@ -11,6 +11,7 @@ CREATE TABLE CONFERENCE (
 );
 
 
+
 -- Table Speaker
 CREATE TABLE Speaker (
     id INT PRIMARY KEY,
