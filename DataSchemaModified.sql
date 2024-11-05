@@ -4,8 +4,8 @@
 CREATE TABLE Conference (
     id INT PRIMARY KEY,
     participantCount INT CHECK (participantCount > 0),
-    eventDate DATE CHECK (eventDate > CURRENT_DATE), -- Date must be in the future
-    location VARCHAR(100) CHECK (location ~ '^[A-Za-z0-9\\s,]+$'), -- Only letters, numbers, spaces, and commas
+    eventDate DATE CHECK (eventDate > CURRENT_DATE), 
+    location VARCHAR(100) CHECK (location ~ '^[A-Za-z0-9\\s,]+$'), 
     organizer VARCHAR(50),
     topic VARCHAR(100),
     duration FLOAT CHECK (duration > 0),
