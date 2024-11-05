@@ -24,4 +24,4 @@ jobs:
  
       - name: Display schema for review 
         run: | 
-          cat ./DataSchema.sql
+          cat ./DataSchemaModified.sql
