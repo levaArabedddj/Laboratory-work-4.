@@ -1,5 +1,3 @@
--- RelationDB_DetailedDataSchema.sql
-
 -- Table Conference
 CREATE TABLE CONFERENCE (
     ID INT PRIMARY KEY,
@@ -28,17 +26,17 @@ CREATE TABLE PARTICIPANT (
     PARTICIPANT VARCHAR(100)
 );
 
+-- Table API
 CREATE TABLE API (
+   CREATE TABLE API (
     id INT PRIMARY KEY,
     type VARCHAR(50) CHECK (type IN ('REST', 'SOAP')),
     version VARCHAR(10) CHECK (version SIMILAR TO '[0-9]+\\.[0-9]+'), -- Using SIMILAR TO
     url VARCHAR(255) CHECK (
         url SIMILAR TO '(https?|ftp)://[\\w\\-]+(\\.[\\w\\-]+)+[/#?]?.*'
-    ), -- URL validation with SIMILAR TO
+    ), -- Replacing ~ with SIMILAR TO for SQLFluff compatibility
     authorization VARCHAR(100) CHECK (authorization IN ('Token-based', 'OAuth'))
 );
-
-
 
 -- Table SupportedMethodsAPI
 CREATE TABLE SUPPORTED_METHODS_API (
@@ -70,5 +68,3 @@ CREATE TABLE CONFIGURATION (
     DATE_FORMAT VARCHAR(20) CHECK (DATE_FORMAT IN ('DD/MM/YYYY', 'MM/DD/YYYY')),
     TEMPERATURE_FORMAT VARCHAR(5) CHECK (TEMPERATURE_FORMAT IN ('°C', '°F'))
 );
-
--- Добавление пустой строки в конце файла
