@@ -6,7 +6,7 @@ CREATE TABLE Conference (
     participantCount INT CHECK (participantCount > 0),
     eventDate DATE CHECK (eventDate > CURRENT_DATE), -- Date must be in the future
     location VARCHAR(100) CHECK (location ~ '^[A-Za-z0-9\\s,]+$'), -- Only letters, numbers, spaces, and commas
-    organizer VARCHAR(100),  -- Задайте длину строки, вместо 0
+    organizer VARCHAR(50),
     topic VARCHAR(100),
     duration FLOAT CHECK (duration > 0),
     status VARCHAR(50) CHECK (status IN ('Active', 'Planned', 'Cancelled'))
@@ -15,7 +15,7 @@ CREATE TABLE Conference (
 -- Table Speaker
 CREATE TABLE Speaker (
     id INT PRIMARY KEY,
-    conference_id INT REFERENCES Conference(id),  -- Добавлен `REFERENCES` для внешнего ключа
+    conference_id INT REFERENCES Conference(id),
     speaker VARCHAR(100)
 );
 
@@ -50,7 +50,7 @@ CREATE TABLE TemperatureAPI (
     targetTemperature FLOAT,
     minTemperature FLOAT,
     maxTemperature FLOAT,
-    lastUpdated TIMESTAMP CHECK (lastUpdated > CURRENT_TIMESTAMP - INTERVAL '1 day'), -- TIMESTAMP для PostgreSQL
+    lastUpdated DATETIME CHECK (lastUpdated > CURRENT_TIMESTAMP - INTERVAL '1 DAY'), -- Must be recent
     sensorStatus VARCHAR(50) CHECK (sensorStatus IN ('Active', 'Inactive', 'Faulty'))
 );
 
