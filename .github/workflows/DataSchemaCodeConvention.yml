@@ -1,24 +1,27 @@
-name: SQL Schema Code Convention Check
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  
-jobs:
-  sql-lint:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Set up SQLLint
-      run: npm install -g sql-lint
-      
-
-    - name: Run SQLLint
-      run: sql-lint DataSchemaModified.sql
+name: Data Schema Code Convention Check 
+ 
+on: 
+  push: 
+    branches: 
+      - main 
+  workflow_dispatch: 
+ 
+jobs: 
+  check-code-conventions: 
+    runs-on: ubuntu-latest 
+ 
+    steps: 
+      - name: Checkout repository 
+        uses: actions/checkout@v2 
+ 
+      - name: Set up SQLLint 
+        run: | 
+          sudo npm install -g sql-lint 
+ 
+      - name: Lint SQL file for code conventions 
+        run: | 
+          sql-lint ./DataSchema.sql 
+ 
+      - name: Display schema for review 
+        run: | 
+          cat ./DataSchema.sql
