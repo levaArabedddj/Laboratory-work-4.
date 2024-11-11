@@ -10,22 +10,26 @@ jobs:
   check-data-processing-software:
     runs-on: ubuntu-latest
     steps:
+      # Шаг проверки репозитория
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Вывод версии Apache Struts
+      # Установка JDK и Maven
+      - name: Set up JDK 11 and Maven
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: 'maven'
+
+      # Установка пакетов и вывод версии Apache Struts
       - name: Display Apache Struts version
         run: |
-          sudo apt-get update
-          sudo apt-get install -y maven
-          mvn dependency:list | grep struts
+          mvn dependency:list | grep struts || echo "Struts dependency not found"
 
       # Вывод версии JVM (Java Virtual Machine)
       - name: Display Java (JVM) version
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y default-jdk
-          java -version
+        run: java -version
 
   check-database-software:
     needs: check-data-processing-software
@@ -34,7 +38,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Вывод версии PostgreSQL
+      # Обновление и установка клиента PostgreSQL
       - name: Display PostgreSQL version
         run: |
           sudo apt-get update
