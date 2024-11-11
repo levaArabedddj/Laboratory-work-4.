@@ -24,10 +24,10 @@ jobs:
 
       - name: Проверить версию Apache Struts
         run: |
-          if [ -x "$(command -v struts)" ]; then
-            struts -v
+          if [ -f "$STRUTS_HOME/struts2-core-2.5.29.jar" ]; then
+            unzip -p "$STRUTS_HOME/struts2-core-2.5.29.jar" META-INF/MANIFEST.MF | grep "Implementation-Version"
           else
-            echo "Apache Struts не установлен"
+            echo 
           fi
 
   print_versions:
