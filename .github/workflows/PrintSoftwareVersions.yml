@@ -6,29 +6,38 @@ on:
       - main
 
 jobs:
+  print_data_processing_versions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Install Apache Struts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget https://archive.apache.org/dist/struts/2.5.29/struts-2.5.29-all.zip -O struts.zip
+          unzip struts.zip -d struts
+          echo "export STRUTS_HOME=$(pwd)/struts" >> $GITHUB_ENV
+          echo 'export PATH=$PATH:$STRUTS_HOME/bin' >> $GITHUB_ENV
+          source $GITHUB_ENV
+
+      - name: Print Apache Struts version
+        run: |
+          if [ -x "$(command -v struts)" ]; then
+            struts -v
+          else
+            echo "Apache Struts is not installed"
+          fi
+
   print_versions:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the code
         uses: actions/checkout@v2
 
-      # Проверка версии Apache Struts
-      - name: Check Struts version
-        run: |
-          if [ -f path/to/struts-core.jar ]; then
-            unzip -p path/to/struts-core.jar META-INF/MANIFEST.MF | grep 'Implementation-Version';
-          else
-            echo "Struts is not installed";
-          fi
-
-      # Установка PostgreSQL
       - name: Install PostgreSQL
         run: sudo apt-get update && sudo apt-get install -y postgresql
 
-      # Запуск PostgreSQL
-      - name: Start PostgreSQL
-        run: sudo service postgresql start
-
-      # Вывод версии PostgreSQL
       - name: Print PostgreSQL version
         run: psql --version || echo "PostgreSQL is not installed"
