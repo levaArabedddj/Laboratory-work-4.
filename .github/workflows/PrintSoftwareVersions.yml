@@ -12,7 +12,7 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v2
 
-      - name: Install Apache Struts
+      - name: Установить Apache Struts
         run: |
           sudo apt-get update
           sudo apt-get install -y wget unzip
@@ -22,12 +22,12 @@ jobs:
           echo 'export PATH=$PATH:$STRUTS_HOME/bin' >> $GITHUB_ENV
           source $GITHUB_ENV
 
-      - name: Print Apache Struts version
+      - name: Проверить версию Apache Struts
         run: |
           if [ -x "$(command -v struts)" ]; then
             struts -v
           else
-            echo "Apache Struts is not installed"
+            echo "Apache Struts не установлен"
           fi
 
   print_versions:
@@ -36,8 +36,8 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v2
 
-      - name: Install PostgreSQL
+      - name: Установить PostgreSQL
         run: sudo apt-get update && sudo apt-get install -y postgresql
 
-      - name: Print PostgreSQL version
-        run: psql --version || echo "PostgreSQL is not installed"
+      - name: Проверить версию PostgreSQL
+        
