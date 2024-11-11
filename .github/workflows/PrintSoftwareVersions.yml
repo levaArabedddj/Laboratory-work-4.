@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
- 
+
 jobs:
   print_data_processing_versions:
     runs-on: ubuntu-latest
@@ -12,22 +12,32 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v2
 
+      - name: Install Apache Struts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget https://archive.apache.org/dist/struts/2.5.29/struts-2.5.29-all.zip -O struts.zip
+          unzip struts.zip -d struts
+          echo "export STRUTS_HOME=$(pwd)/struts" >> $GITHUB_ENV
+          echo 'export PATH=$PATH:$STRUTS_HOME/bin' >> $GITHUB_ENV
+          source $GITHUB_ENV
+
       - name: Print Apache Struts version
-        run: struts -v || echo "Apache Struts is not installed"
-        
+        run: |
+          if [ -x "$(command -v struts)" ]; then
+            struts -v
+          else
+            echo "Apache Struts is not installed"
+          fi
+
   print_versions:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the code
         uses: actions/checkout@v2
 
-      - name: Print Apache Struts version
-        run: struts -v || echo "Struts is not installed"
-
       - name: Install PostgreSQL
         run: sudo apt-get update && sudo apt-get install -y postgresql
 
       - name: Print PostgreSQL version
         run: psql --version || echo "PostgreSQL is not installed"
-
-  
