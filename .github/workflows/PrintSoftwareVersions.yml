@@ -4,39 +4,30 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
-
+ 
 jobs:
-  check-data-processing-software:
+  print_data_processing_versions:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Check out the code
         uses: actions/checkout@v2
 
-      # Виведення версії React.js
-      - name: Display React.js version
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y npm
-          npm list react --version
-
-      # Виведення версії JVM (Java Virtual Machine)
-      - name: Display Java (JVM) version
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y default-jdk
-          java -version
-
-  check-database-software:
-    needs: check-data-processing-software
+      - name: Print Apache Struts version
+        run: struts -v || echo "Apache Struts is not installed"
+        
+  print_versions:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Check out the code
         uses: actions/checkout@v2
 
-      # Виведення версії PostgreSQL
-      - name: Display PostgreSQL version
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y postgresql-client
-          psql --version
+      - name: Print Apache Struts version
+        run: struts -v || echo "Struts is not installed"
+
+      - name: Install PostgreSQL
+        run: sudo apt-get update && sudo apt-get install -y postgresql
+
+      - name: Print PostgreSQL version
+        run: psql --version || echo "PostgreSQL is not installed"
+
+  
