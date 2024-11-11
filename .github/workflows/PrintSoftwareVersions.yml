@@ -1,31 +1,42 @@
-name: Print Software Versions 
+name: Print Software Versions
 
 on:
   push:
     branches:
       - main
- 
+  workflow_dispatch:
+
 jobs:
-  print_data_processing_versions:
+  check-data-processing-software:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Print Apache Struts version
-        run: struts -v || echo 
-        
-  print_versions:
+      # Вывод версии Apache Struts
+      - name: Display Apache Struts version
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y maven
+          mvn dependency:list | grep struts
+
+      # Вывод версии JVM (Java Virtual Machine)
+      - name: Display Java (JVM) version
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y default-jdk
+          java -version
+
+  check-database-software:
+    needs: check-data-processing-software
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Print Apache Struts version
-        run: struts -v || echo "Struts is not installed"
-
-      - name: Install PostgreSQL
-        run: sudo apt-get update && sudo apt-get install -y postgresql
-
-      - name: Print PostgreSQL version
-        run: psql --version || echo "PostgreSQL is not installed
+      # Вывод версии PostgreSQL
+      - name: Display PostgreSQL version
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+          psql --version
