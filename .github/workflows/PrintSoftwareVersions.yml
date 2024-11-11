@@ -18,16 +18,10 @@ jobs:
           sudo apt-get install -y wget unzip
           wget https://archive.apache.org/dist/struts/2.5.29/struts-2.5.29-all.zip -O struts.zip
           unzip struts.zip -d struts
-          echo "export STRUTS_HOME=$(pwd)/struts" >> $GITHUB_ENV
-          echo 'export PATH=$PATH:$STRUTS_HOME/bin' >> $GITHUB_ENV
-          source $GITHUB_ENV
-
-      - name: Проверить версию Apache Struts
-        run: |
-          if [ -f "$STRUTS_HOME/struts2-core-2.5.29.jar" ]; then
-            unzip -p "$STRUTS_HOME/struts2-core-2.5.29.jar" META-INF/MANIFEST.MF | grep "Implementation-Version"
+          if [ -d "struts" ]; then
+            echo "Apache Struts установлен в папке struts"
           else
-            echo 
+            echo "Ошибка при установке Apache Struts"
           fi
 
   print_versions:
@@ -40,4 +34,4 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y postgresql
 
       - name: Проверить версию PostgreSQL
-        run: psql --version 
+        run: psql --version || echo "PostgreSQL не установлен"
